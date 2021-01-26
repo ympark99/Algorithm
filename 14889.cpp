@@ -1,79 +1,58 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include<iostream>
+#include<math.h>
 
 using namespace std;
 
-int n;
-vector< vector<int> > v;
-vector<int> start;
-vector<int> link;    
+int stats[21][21];
+bool check[22];
+int N;
+int ans = 1000000000; 
 
-bool *check = new bool[n+1];
-// bool check[20] = {0,}; // dfs 체크
+void dfs(int x, int pos)
+{
+	if (x == N / 2)
+	{
+		int start, link;
+		start = 0;
+		link = 0;
 
-int result(){
-    for(int i=1; i<=n; i++){
-        if(!check[i]) link.push_back(i); // 링크 팀 인원 확정
-    }   
+		for (int i = 1; i <= N; i++)
+		{
+			for (int j = 1; j <= N; j++)
+			{
+				if (check[i] == true && check[j] == true) start += stats[i][j];
+				if (check[i] == false && check[j] == false) link += stats[i][j];
+			}
+		}
 
-    cout << "start size" << " ";
-    for(int i=0; i < start.size(); i++){
-        cout << start[i] << " ";
-    }
-//    cout << "\n";
+		int temp = abs(start - link);
+		if (ans > temp) ans = temp;
 
-    int sum = 0;
-    for(int i=0; i<start.size(); i++){
-        int start_x = start[i];
-        for(int j=0; j<start.size(); j++){
-            int start_y = start[j];
-            sum += v.at(start_x).at(start_y);
-        }
-    }
+		return;
+	}
 
-    cout <<"\t sum :" << sum << "\n";
+	for (int i = pos; i < N; i++)
+	{
+		check[i] = true;
+		dfs(x + 1, i + 1);
+		check[i] = false;
+	}
 
-    link.clear();
-    return 0;
 }
 
-void dfs(int num, int depth){
-    if(depth >= (n/2)){ // 스타트팀 인원 확정 
-        result();
-        return;
-    }
-    for(int i=num; i<=n; i++){
-        if(!check[i]){ // 중복 제거
-            check[i] = true;
-            start.push_back(i);
+int main()
+{
+	cin >> N;
 
-            dfs(i+1, depth+1);
+	for (int i = 1; i <= N; i++)
+	{
+		for (int j = 1; j <= N; j++)
+		{
+			cin >> stats[i][j];
+		}
+	}
 
-            check[i] = false;
-            start.pop_back();
-        } 
-    }
-}
+	dfs(0, 1);
 
-int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
-
-    cin >> n;
-
-    for(int i=0; i<n; i++){ // NxN 동적할당
-        vector<int> element;
-        v.push_back(element);
-
-//        int input[n];
-        int *input = new int[n];
-        for(int j=0; j<n; j++){
-            cin >> input[j];
-            v[i].push_back(input[j]);        
-        }
-    }
-
-    dfs(1,0);
-    
-    return 0;
+	cout << ans;
 }
