@@ -1,2 +1,2 @@
-# BOJ-Algorithm
-BOJ Algorithm solved(C++)
+# Algorithm
+BOJ, programmers, etc Algorithm solved(C++)
