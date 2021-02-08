@@ -29,11 +29,11 @@ string solution(vector<int> numbers, string hand) {
         else{
             if(numbers[i] == 0) numbers[i] = 11;
             if(calc(numbers[i],left) == calc(numbers[i],right)){
-                if(hand.compare("left")){
+                if(!hand.compare("right")){
                     answer += "R";
                     right = numbers[i];
                 }
-                else if(hand.compare("right")){
+                else if(!hand.compare("left")){
                     answer += "L";
                     left = numbers[i];
                 }                
