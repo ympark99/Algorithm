@@ -15,14 +15,18 @@ int main(){
     stack<int> st;
     stack<int> rst; // 초기 스택
     string str = "";
-
-    int no = 0;
+    
     for(int i=0; i<n; i++){
         cin >> v[i];
         rst.push(n-i);
     }
 
-    for(int i=0; i<n; i++){        
+    for(int i=0; i<n; i++){    
+        if(st.empty()){
+            st.push(rst.top());
+            str += "+";
+            rst.pop();            
+        }
         if(st.top() == v[i]){
             st.pop();
             str += "-";
@@ -35,26 +39,19 @@ int main(){
                     break;
                 }
                 if(rst.empty()){
-                    no = 1;
-                    break;
-                }
-                else if(!rst.empty()){      
-                    st.push(rst.top());
-                    str += "+";
-                    rst.pop();
-                }
+                    cout << "NO" << "\n";
+                    return 0;
+                }                
+                st.push(rst.top());
+                str += "+";
+                rst.pop();
             }
         }     
     }
 
-    if(no == 1){
-        cout << "NO" << "\n";
-        return 0;
-    }
-    else{
-        for(int i=0; i<str.size(); i++){
-            cout << str[i] << "\n";
-        }
-        return 0;
-    }
+    for(int i=0; i<str.size(); i++){
+        cout << str[i] << "\n";
+    }   
+
+    return 0;
 }
