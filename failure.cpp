@@ -4,8 +4,11 @@
 
 using namespace std;
 
-bool desc(pair<double,double> a, pair<double,double> b){
-    return a.second > b.second;
+bool desc(pair<int,double> a, pair<int,double> b){
+    if(a.second == b.second){
+        return a.first < b.first;
+    }
+    else return a.second > b.second;
 }
 
 vector<int> solution(int N, vector<int> stages) {
@@ -17,7 +20,7 @@ vector<int> solution(int N, vector<int> stages) {
         stop.push_back(0);
         chal.push_back(0);
     }
-    vector<pair<double,double>> fail(N+1);
+    vector<pair<int,double>> fail(N+1);
 
     for(int i=0; i<stages.size(); i++){
         stop[stages[i]] += 1;
@@ -25,13 +28,15 @@ vector<int> solution(int N, vector<int> stages) {
     
     for(int i=1; i<=N; i++){
         chal[i] = chal[i-1] + stop[i];
-        fail[i].first = (double)stop[i] / (double)chal[i];
-        fail[i].second = (double)stop[i] / (double)chal[i];
+
+        fail[i].first = i;
+        if(chal[i] == 0) fail[i].second = 0;
+        else fail[i].second = (double)stop[i] / (double)chal[i]; // 실패율
     }
 
-    stable_sort(fail.begin(),fail.end(),desc);
+    sort(fail.begin(),fail.end(),desc);
 
-    for(int i=0; i< N; i++){
+    for(int i=1; i<=N; i++){
         answer.push_back(fail[i].first);
     }
 
