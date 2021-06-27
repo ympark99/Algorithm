@@ -1,25 +1,17 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-using namespace std;
- 
-int main()
-{
-	int n;
-	cin >> n;
-	vector<int> v;
-	v.clear();
+#include <algorithm>
 
-	for(int i=0; i<n; i++){
-		int num;
-		cin >> num;
-		v.push_back(num); // vector 추가
-		
-		sort(v.begin(),v.end());
-	}
-	
-	for(int i=0; i<n; i++){
-		cout << v[i] << endl;		
-	}
-	return 0;
+using namespace std;
+
+int main(void){
+   ios_base::sync_with_stdio(0); cin.tie(0);
+   int N;
+   cin >> N;
+   vector<int> v(N);
+   for(int i = 0; i < N; i++){
+      cin >> v[i];
+   }
+   sort(v.begin(), v.end());
+   for(auto elem : v) cout << elem << '\n';
 }
