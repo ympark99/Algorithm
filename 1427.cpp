@@ -23,3 +23,18 @@ int main(void) {
 
     return 0;
 }
+/*
+// string 이용
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main(void){
+    string str = "";
+    cin >> str;
+    sort(str.begin(), str.end(), greater<>());
+    cout << str;
+}
+*/
