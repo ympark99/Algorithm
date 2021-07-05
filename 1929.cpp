@@ -1,38 +1,29 @@
 #include <iostream>
-#define MAX 1000001
-
+#include <cstdio>
+ 
 using namespace std;
+ 
+int num[1000001];
+ 
+int main()
+{
+    int m, n;
+    scanf("%d%d", &m, &n);
+    num[1] = 1;
 
-int main(){
-    bool check[MAX] = {false,};
-    int M, N;
-    cin >> M >> N;
-
-    for(int i = M; i <= N; i++){
-        if(check[i]) continue;
-        if(i == 1) continue;
-        else if(i == 2){
-            cout << i << '\n';
-            int num = 1;
-            while (i * num <= N){
-                check[i * num] = true;
-                num++;
-            }
-        }
-        else{
-            bool isTrue = true;
-            for(int j = 2; j < i; j++){
-                if(check[j]) continue;
-                if(i % j == 0) isTrue = false;
-            }
-            if(isTrue){
-                cout << i << '\n';
-                int num = 1;
-                while (i * num <= N){
-                    check[i * num] = true;
-                    num++;
-                }              
+    for (int i = 2; i <= n; i++)
+    {
+        if (num[i] == 0) {
+            for (int j = 2; n >= i * j; j++)
+            {
+                num[i * j] = 1;
             }
         }
     }
+    for (int i = m; i <= n; i++)
+    {
+        if(num[i] == 0)
+            printf("%d\n", i);
+    }
+    return 0; 
 }
