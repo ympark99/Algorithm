@@ -8,7 +8,7 @@ int main(){
 
     int dp[40 + 1] = {0, };
     bool isVip[40 + 1] = {false,};
-    int answer, cnt = 0;
+    int answer = 1;
 
     int N;
     cin >> N;
@@ -28,14 +28,16 @@ int main(){
         dp[i] = dp[i-2] + dp[i-1];
     }
 
-    for(int i = 1; i <= M; i++){
+    int cnt = 0;
+    for(int i = 1; i <= N; i++){
         cnt++;
-        if(isVip[i] == true || i == M){
+        if(isVip[i] == true){
             cnt--;
-            answer += dp[cnt];
+            answer *= dp[cnt];
             cnt = 0;
         }
     }
+    if(cnt > 0) answer *= dp[cnt];
 
     cout << answer;
 
