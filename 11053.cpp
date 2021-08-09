@@ -3,32 +3,30 @@
 
 using namespace std;
 
-int dp[1001];
-int arr[1001];
+int arr[1000 + 1];
+int dp[1000 + 1];
 
-int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
+int main(void)
+{
+    ios::sync_with_stdio(false); cin.tie(NULL);
 
     int n;
     cin >> n;
-    for (int i=0; i< n; i++) {
-        cin >> arr[i];
-        dp[i] = 1; //길이가 1인 경우로 초기화
-    }
-    for (int i=0; i < n; i++) {
-        int& last_val = arr[i];
-        for (int j=0; j < i; j++) {
-            int& target_val = arr[j];
-            if (last_val > target_val) {
-                dp[i] = max(dp[i], dp[j] + 1);
-            }
-        }
-    }
+
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];    
     
-    int ans = 0;
-    for (int i=0; i<n; i++) {
-        ans = max(ans, dp[i]);
+    int res = 0;
+    for(int i = 0; i < n; i++){
+        dp[i] = 1;
+        for(int j = 0; j < i; j++){
+            if(arr[i] > arr[j])
+                dp[i] = max(dp[i], dp[j] + 1);
+        }
+        res = max(res, dp[i]);
     }
-    cout << ans << '\n';
-	return 0;
+
+    cout << res;
+
+    return 0;
 }
