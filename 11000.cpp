@@ -41,7 +41,7 @@ int main(){
             }
             if(dq[i].first >= v.back()){
                 v.push_back(dq[i].second);
-                dq.pop_front();
+                dq.erase(dq.begin() + i);
             }
             else i++;           
         }
