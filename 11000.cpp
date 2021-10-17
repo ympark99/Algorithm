@@ -1,51 +1,44 @@
 #include <iostream>
-#include <vector>
-#include <deque>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
+int n;
 
-bool comp(pair<int, int> &a, pair<int, int> &b){
-    if(a.first == b.first) return a.second < b.second;
-    return a.first < b.first;
+struct room {
+    int s,t;
+};
+
+room arr[200001];
+
+bool cmp(room a, room b) {
+    if(a.s==b.s) {
+        return a.t < b.t;
+    }
+    return a.s < b.s;
 }
 
-int main(){
-    ios::sync_with_stdio(false); cin.tie(NULL);
-
-    deque<pair<int, int>> dq;
-
-    int n;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
     cin >> n;
-
-    vector<int> v;
-
-    while(n--){
-        int s, t;
-        cin >> s >> t;
-        dq.push_back(make_pair(s, t));
+    for(int i=0 ; i<n ; i++) {
+        cin >> arr[i].s >> arr[i].t;
     }
-    
-    sort(dq.begin(), dq.end(), comp);
+    sort(arr, arr+n, cmp);
 
-    int answer = 0;
-    int cnt = 0;
-    while(!dq.empty()){
-        int i = 0;
-        while(i < dq.size()){
-            if(v.empty()){
-                v.push_back(dq.front().second);
-                answer++;
-                dq.pop_front();
-                continue;
-            }
-            if(dq[i].first >= v.back()){
-                v.push_back(dq[i].second);
-                dq.erase(dq.begin() + i);
-            }
-            else i++;           
+    priority_queue<int, vector<int>, greater<int>> q;
+    q.push(arr[0].t);
+    for(int i=1 ; i<n ; i++) {
+        int s = arr[i].s, t = arr[i].t;
+        int now = q.top();
+        if(now>s) {
+            q.push(t);
+        } else {
+            q.pop();
+            q.push(t);
         }
-        v.clear();
     }
-    cout << answer;
+    cout << q.size();
+    return 0;
 }
