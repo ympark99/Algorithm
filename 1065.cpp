@@ -17,10 +17,7 @@ int main(){
 			a = i % 10;
 			b = (i / 10) % 10;
 			c = (i / 100) % 10;
-
-			if(a < b && (b - a) == (c - b)) cnt++;
-			else if(b < a && (a - b) == (b - c)) cnt++;
-			else if(a == b && b == c) cnt++;
+			if(c - b == b - a) cnt++;		
 		}
 
 		cout << cnt;
