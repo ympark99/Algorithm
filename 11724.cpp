@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -6,6 +7,7 @@ int arr[1000 + 1][1000 + 1];
 bool check[1000 + 1];
 
 int N, M, ans;
+queue<int> q;
 
 void dfs(int num){
 	check[num] = true;
@@ -13,6 +15,23 @@ void dfs(int num){
 		if(arr[num][i] && !check[i])
 			dfs(i);
 	}
+	return;
+}
+
+void bfs(int num){
+	q.push(num);
+	check[num] = true;
+
+	while (!q.empty()){
+		int now = q.front();
+		q.pop();
+		for(int i = 1; i <= N; i++){
+			if(arr[now][i] && !check[i]){
+				check[i] = true;
+				q.push(i);
+			}
+		}
+	}	
 	return;
 }
 
@@ -30,8 +49,9 @@ int main(){
 
 	for(int i = 1; i <= N; i++){
 		if(!check[i]){
+			// dfs(i);
+			bfs(i);
 			ans++;
-			dfs(i);
 		}
 	}
 
