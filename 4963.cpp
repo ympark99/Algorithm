@@ -32,6 +32,20 @@ void bfs(){
 	}
 }
 
+void dfs(int y, int x){
+		for(int i = 0; i < 8; i++){
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+
+			if(nx <= 0 || ny <= 0 || nx > w || ny > h)
+				continue;
+			if(arr[ny][nx] && !check[ny][nx]){
+				check[ny][nx] = true;				
+				dfs(ny, nx);
+			}
+		}	
+}
+
 int main(){
 	ios::sync_with_stdio(false); cin.tie(NULL);
 
@@ -51,7 +65,8 @@ int main(){
 				if(!check[i][j] && arr[i][j]){
 					q.push({i, j});
 					check[i][j] = true;
-					bfs();
+					dfs(i, j);
+					// bfs();
 					ans++;
 				}				
 			}
