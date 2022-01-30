@@ -65,8 +65,8 @@ int main(){
 				if(!check[i][j] && arr[i][j]){
 					q.push({i, j});
 					check[i][j] = true;
-					dfs(i, j);
-					// bfs();
+// 					dfs(i, j);
+					bfs();
 					ans++;
 				}				
 			}
