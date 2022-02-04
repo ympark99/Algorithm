@@ -66,7 +66,7 @@ int main(void){
         v[x][y] = 1;
     }
     
-    dfs(start, 0, v);
+//     dfs(start, 0, v);
     print();
     cout << '\n';
     answer.clear();
