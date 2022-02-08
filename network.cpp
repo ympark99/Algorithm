@@ -18,6 +18,7 @@ int solution(int n, vector<vector<int>> computers) {
         if (!visit[i]) {
             answer++;
             dfs(i, computers, visit, n);
+            // bfs(i, computers, visit, n);
         }
     }
     return answer;
