@@ -35,6 +35,7 @@ int solution(string begin, string target, vector<string> words) {
         return 0;
 
     dfs(begin, target, words, 0, check);
+//     bfs(begin, target, words, 0, check);    
 
     if(answer == 51) return 0;
 
