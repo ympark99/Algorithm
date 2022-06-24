@@ -15,7 +15,6 @@ int fibo(int n){
         return 1;
     }    
     if(v[n] != 0) return v[n];
-
     else return v[n] = fibo(n-1) + fibo(n-2);
 }
 
