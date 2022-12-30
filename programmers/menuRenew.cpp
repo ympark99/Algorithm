@@ -13,45 +13,30 @@ bool cmp(pair<string, int> a, pair<string, int> b) {
 }
  
 void findAllCourse(string order, int size, string s, int index) {
- 
-    //종료조건
     if (s.length() == size) {
-        map<string, int>::iterator iter;
- 
+        map<string, int>::iterator iter; 
         iter = m.find(s);
  
-        //맵에 코스가 이미 존재하는 경우 -> 개수 + 1
-        if (iter != m.end()) {
+        if (iter != m.end()) 
             iter->second++;
-        }
-        //맵에 코스가 존재하지 않는 경우 -> 맵에 삽입
-        else {
-            m.insert(pair<string, int>(s, 1));
-        }
- 
+        else 
+            m.insert({s, 1});
         return;
-    }
- 
+    } 
     for (int i = index; i < order.length(); i++) {
         findAllCourse(order, size, s + order[i], i + 1);
     }
 }
  
 vector<string> solution(vector<string> orders, vector<int> course) {
- 
     vector<string> answer;
  
-    //코스 크기 만큼 모두 해보기
-    for (int i = 0; i < course.size(); i++) {
- 
+    for (int i = 0; i < course.size(); i++) { 
         m.clear();
  
         for (int j = 0; j < orders.size(); j++) {
- 
-            //메뉴 정렬(ex. CBA -> ABC)
             sort(orders[j].begin(), orders[j].end());
- 
-            //주문한 조합에서 코스 개수만큼 골라서, 모든 조합 만들기 -> 맵에 저장
+          
             if (course[i] <= orders[j].length()) {
                 findAllCourse(orders[j], course[i], "", 0);
             }
@@ -81,9 +66,7 @@ vector<string> solution(vector<string> orders, vector<int> course) {
         }
     }
  
-    //정렬
     sort(answer.begin(), answer.end());
  
-    //반환
     return answer;
 }
