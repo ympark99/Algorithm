@@ -1,41 +1,60 @@
-#include <iostream>
+#include <bits/stdc++.h>
+
+#define INF 987654321
 
 using namespace std;
 
-int T;
-int arr[125 + 1][125 + 1];
-int dp[125 + 1][125 + 1] = {0, };
+int N;
+int arr[125][125];
+int ans[125][125];
 
-int drow[4] = {1, -1, 0, 0};
-int dcol[4] = {0, 0, -1, 1};
+int dx[4] = {0, 0, -1, 1};
+int dy[4] = {-1, 1, 0, 0};
 
-int dfs(int row, int col){
-	for(int i = 0; i < 4; i++){
-		int nrow = row + drow[i];
-		int ncol = col + dcol[i];
-		if(nrow > -1 || nrow < T || ncol > -1 || ncol < T){
-			// dp[row][col] = min(dp[row][col], dfs(nrow, ncol) + arr[row][col]);
-			dp[row][col] += (dfs(nrow, ncol) + arr[row][col]);
-		}	
-	}
-
-	return dp[row][col];
+void init(){
+	for(int i = 0; i < N; i++)
+		for(int j = 0; j < N; j++)
+			ans[i][j] = INF;
 }
 
-int main() {
-	ios::sync_with_stdio(false); cin.tie(NULL);
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(NULL);
 
 	int cnt = 1;
 	while(1){
-		cin >> T;
-		if(!T) break;
-		
-		for(int i = 0; i < T; i++){
-			for(int j = 0; j < T; j++)
-				cin >> arr[i][j];
-		}
 
-		printf("Problem %d: %d", cnt, dfs(T, T));
-		cnt++;
+		cin >> N;
+		if(!N) break;
+
+		for(int i = 0; i < N; i++)
+			for(int j = 0; j < N; j++)
+				cin >> arr[i][j];
+
+		queue<pair<int, int>> q;
+		q.push({0, 0});
+		init();
+		ans[0][0] = arr[0][0];
+		while(!q.empty()){
+			int row = q.front().first;
+			int col = q.front().second;
+			q.pop();
+			
+			if(row == N-1 && col == N-1)
+				continue;
+
+			for(int i = 0; i < 4; i++){
+				int nRow = row + dx[i];
+				int nCol = col + dy[i];
+				if(nRow < 0 || nRow >= N || nCol < 0 || nCol >= N)
+					continue;
+
+				if(ans[nRow][nCol] > ans[row][col] + arr[nRow][nCol]){
+					ans[nRow][nCol] = ans[row][col] + arr[nRow][nCol];
+					q.push({nRow, nCol});	
+				}
+			}
+		}
+		cout << "Problem " << cnt++ << ": " << ans[N-1][N-1] << '\n';
+		memset(arr, 0, sizeof(arr));
 	}
 }
