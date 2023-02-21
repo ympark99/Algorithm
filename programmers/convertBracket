@@ -1,0 +1,66 @@
+#include <string>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+bool isRightString(string input) {
+    stack<char> st;
+    int len = (int)input.length();
+
+    for(int i = 0; i < len; i++) {
+        if(input[i] == '(') {
+            st.push('(');
+        }
+        else {
+            if(st.size() == 0) {
+                return false;
+            }
+            st.pop();
+        }
+    }
+    if(st.size() > 0)
+        return false;
+    return true;
+}
+
+string solution(string p) {
+    string answer = "";
+
+    if(p == "")
+        return "";
+
+    string u, v;
+    int len = (int)p.length();
+    int left = 0, right = 0;
+    for(int i = 0; i < len; i++) {
+        if(p[i] == '(') left++;
+        else if(p[i] == ')') right++;
+
+        if(left == right) {
+            u = p.substr(0, i+1);
+            v = p.substr(i+1);
+            break;
+        }
+    }
+
+    if(isRightString(u)) {
+        v = solution(v);
+        answer = u + v;
+        return answer;
+    }
+    else {
+        answer = "(";
+        answer = answer + solution(v);
+        answer = answer + ')';
+        u.erase(0,1);
+        u.erase(u.length()-1, 1);
+        for(int i = 0; i < u.length(); i++) {
+            if(u[i] == '(')
+                answer = answer + ')';
+            else if(u[i] == ')')
+                answer = answer + '(';
+        }
+        return answer;
+    }
+}
