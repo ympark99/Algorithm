@@ -1,45 +1,31 @@
 #include <iostream>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
+int N, M;
+int dp[41];
+int idx = 1, ans = 1;
+
 int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
+    ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-    int dp[40 + 1] = {0, };
-    bool isVip[40 + 1] = {false,};
-    int answer = 1;
+    cin >> N >> M;
 
-    int N;
-    cin >> N;
+    dp[0] = 1;
+    dp[1] = 1;
+    dp[2] = 2;
+	for(int i = 3; i <= 40; i++)
+		dp[i] = dp[i - 1] + dp[i - 2];
 
-    int M;
-    cin >> M;
-
-    while(M--){
-        int vip;
+    int vip;
+    for(int i = 0; i < M; i++){
         cin >> vip;
-        isVip[vip] = true;
-    }   
-
-    dp[1] = 1, dp[2] = 2;
-
-    for(int i = 3; i <= N; i++){
-        dp[i] = dp[i-2] + dp[i-1];
+        ans *= dp[vip - idx];
+        idx = vip + 1;
     }
+    ans *= dp[N + 1 - idx];
 
-    int cnt = 0;
-    for(int i = 1; i <= N; i++){
-        cnt++;
-        if(isVip[i] == true){
-            cnt--;
-            answer *= dp[cnt];
-            cnt = 0;
-        }
-    }
-    if(cnt > 0) answer *= dp[cnt];
-
-    cout << answer;
-
+    cout << ans << '\n';
     return 0;
 }
