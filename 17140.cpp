@@ -23,11 +23,9 @@ int main(){
     }
     while(arr[r][c] != k && timer <= 100){
         // R 연산
-        vector<int> Size;
-        if (row >= col)    // 정사각형이거나 세로로긴 형태
-        {
-            for (int i = 1; i <= row; i++)
-            {
+        if(row >= col){
+            int nCol = 0;
+            for(int i = 1; i <= row; i++){
                 vector<pair<int, int>> v;
                 memset(numberCnt, 0, sizeof(numberCnt));
                 for(int j = 1; j <= col; j++) numberCnt[arr[i][j]]++;
@@ -44,14 +42,13 @@ int main(){
                     arr[i][idx++] = v[j].second;
                     arr[i][idx++] = v[j].first;
                 }
-                idx--;
-                Size.push_back(idx);
+                nCol = max(nCol, --idx);
             }
-            sort(Size.begin(), Size.end());
-            col = Size.back();
+            col = nCol;
         }
         // C 연산
         else{
+            int nRow = 0;
             for(int i = 1; i <= col; i++){
                 vector<pair<int, int>> v;
                 memset(numberCnt, 0, sizeof(numberCnt));
@@ -69,15 +66,13 @@ int main(){
                     arr[idx++][i] = v[j].second;
                     arr[idx++][i] = v[j].first;
                 }
-                idx--;
-                Size.push_back(idx);
+                nRow = max(nRow, --idx);
             }
-            sort(Size.begin(), Size.end());
-            row = Size.back();
+            row = nRow;
         }
         timer++;
     }
-    
+
     if(arr[r][c] != k)
         cout << -1 << '\n';
     else cout << timer << '\n';
