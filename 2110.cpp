@@ -4,51 +4,45 @@
 
 using namespace std;
 
-vector<int> router;
-
-int solution(int N, int C){
-    int dist_left = 0;
-    int dist_right = router[N-1] - 1;
+int main(void){
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     
-    int ans = 0;
+	int n, c, num, st, router, start, end, mid, ans = 0;
+	cin >> n >> c;
+	vector<int> pos;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> num;
+		pos.push_back(num);
+	}
+	sort(pos.begin(), pos.end());
+	start = 1;
+	end = pos[n - 1] - pos[0];
 
-    while (dist_left <= dist_right){
-        int cnt = 1;
-        int mid = (dist_left + dist_right) / 2;
-        int start = router[0];
+	while (start <= end)
+	{
+		router = 1;
+		mid = (start + end) / 2;
+		st = pos[0];
 
-        for(int i = 1; i < N; i++){
-            int end = router[i];
-            if(end - start >= mid){
-                cnt++;
-                start = end;
-            }
-        }
-        // 많이 나왔을때
-        if(cnt >= C){
-            ans = mid;
-            dist_left = mid + 1;
-        }
-        else dist_right = mid - 1;
-    }
-    return ans;
-}
+		for (int i = 1; i < n; i++)
+		{
+			if (pos[i] - st >= mid)
+			{
+				router++;
+				st = pos[i];
+			}
+		}
 
-int main(){
-    ios::sync_with_stdio(false); cin.tie(NULL);
+		if (router >= c)
+		{
+			ans = max(ans, mid);
+			start = mid + 1;
+		}
 
-    int N, C;
-    cin >> N >> C;
-
-    int num;
-    for(int i = 0; i < N; i++){
-        cin >> num;
-        router.push_back(num);
-    }
-
-    sort(router.begin(), router.end());
-
-    cout << solution(N, C);
-
-    return 0;
+		else
+			end = mid - 1;
+	}
+	cout << ans;
+	return 0;
 }
