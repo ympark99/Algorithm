@@ -1,30 +1,35 @@
-#include <iostream>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int main(){
-    long a,b;
-    int answer = 0;
-    cin >> a >> b;
+typedef long long ll;
+const int MAX = 10000001; // root(10^14) = 10^7
 
-    int * check = new int[b + 1] {0,};
-    check[0] = 1; check[1] = 1;
+ll A, B;
+bool visited[MAX];
+vector<int> Prime;
 
-    for(long i = 2; i <= sqrt(b); i++){
-        if(check[i]) continue;
-        for(long j = i * 2; j <= b; j += i)
-            check[j] = 1;
+int main() {
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-        for(long j = i * i; j <= b; j *= i)
-            check[j] = 2;                    
-    }
+	// 소수 만들어놓기
+	for (int i = 2; i < MAX; ++i) {
+		if (visited[i]) continue;
+		Prime.push_back(i);
+		for (int j = 2 * i; j < MAX; j += i) visited[j] = true;
+	}
 
-    for(long i = a; i <= b; i++){
-        if(check[i] == 2) answer++;
-    }
+	cin >> A >> B;
 
-    cout << answer;
-
-    return 0;
+	ll ans = 0LL;
+	for (auto it : Prime) {
+		ll curr = 1LL * it;
+		ll temp = curr;
+		while (temp <= B / curr) {
+			temp *= curr;
+			if (temp >= A) ans++;
+		}
+	}
+	cout << ans << '\n';
+	return 0;
 }
