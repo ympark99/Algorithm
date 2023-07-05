@@ -1,39 +1,30 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int main(){	
-	ios::sync_with_stdio(false); cin.tie(NULL);
+int N, M;
 
-	map<string, int> m;
-	vector<string> v;
+int main() {
+	ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 
-	int N, M;
+	unordered_map<string, int> um;
+	vector<string> ans;
+
 	cin >> N >> M;
-
-	int cnt = 0;
 	string str = "";
-	while(N--){
+	for(int i = 0; i < N; i++) {
 		cin >> str;
-		m.insert({str, 1});
+		um[str] = 1;
 	}
-
-	while(M--){
+	for(int i = 0; i < M; i++) {
 		cin >> str;
-		if(m[str] == 1){
-			v.push_back(str);
-			cnt++;
-		}
+		if(um.find(str) != um.end())
+			ans.push_back(str);
 	}
-	
-	sort(v.begin(), v.end());
+	sort(ans.begin(), ans.end());
 
-	cout << cnt << '\n';
-	for(auto elem : v) cout << elem << '\n';
-
+	cout << ans.size() << '\n';
+	for(auto elem : ans)
+		cout << elem << '\n';
 	return 0;
-} 
+}
