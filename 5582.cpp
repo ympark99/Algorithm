@@ -1,42 +1,29 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-
+#include <bits/stdc++.h>
+ 
 using namespace std;
 
-const int MN = 4001;
+string str1, str2;
+int dp[4001][4001];
+int ans;
 
-int dp[MN][MN] = {0,};
+int main(void) {
+    ios::sync_with_stdio(NULL); cin.tie(0); cout.tie(0);
 
-int main(void){
-    ios::sync_with_stdio(false); cin.tie(NULL);
+	cin >> str1 >> str2;
 
-    string s1, s2;
+	str1 = ' ' + str1;
+	str2 = ' ' + str2;
 
-    cin >> s1 >> s2;
+	for(int i = 1; i < str1.length(); i++) {
+		for(int j = 1; j < str2.length(); j++) {
+			if(str1[i] == str2[j]) {
+				dp[i][j] = dp[i-1][j-1] + 1;
+				ans = max(ans, dp[i][j]);
+			}
+		}
+	}
 
-    s1 = ' ' + s1;
-    s2 = ' ' + s2;
-
-    int answer = 0;
-    for(int i = 1; i < s1.length(); i++){
-        for(int j = 1; j < s2.length(); j++){
-            if(s1[i] == s2[j]) {
-                dp[i][j] = dp[i-1][j-1] + 1;
-                answer = max(answer, dp[i][j]);
-            }
-        }
-    }
-
-/*
-    for(int i = 1; i < s1.length(); i++){
-        for(int j = 1; j < s2.length(); j++){
-            cout << dp[i][j] << ' ';
-        }
-        cout << '\n';
-    }    
-*/
-    cout << answer;
+	cout << ans << '\n';
 
     return 0;
 }
